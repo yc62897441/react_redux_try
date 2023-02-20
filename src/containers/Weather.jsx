@@ -43,6 +43,7 @@ function Weather() {
     return (
         <WeatherWrapper>
             <Header />
+            <h1>請確認是否有補上 CWBAuthorization</h1>
             {/* // 執行順序 2、6 */}
             {/* {console.log('component data')} */}
             {data?.datasetInfo?.datasetDescription}
