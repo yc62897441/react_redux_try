@@ -11,16 +11,25 @@ export const addData = () => {
     return async (dispatch, getState) => {
         // Fetching results from an API : asynchronous action
         const response = await CWBHttpRequest('get', 'F-B0053-031', 'JSON', '公開資料取得錯誤')
-        const data = response.data.cwbopendata.dataset
 
-        console.log('addData data', data)
+        if (response.status === 200) {
+            const data = response.data.cwbopendata.dataset
 
-        // Dispatching the action when async
-        // action has completed.
-        dispatch({
-            type: 'ADD_DATA',
-            payload: data,
-        })
+            // Dispatching the action when async
+            // action has completed.
+            dispatch({
+                type: 'ADD_DATA',
+                payload: data,
+            })
+        } else {
+            dispatch({
+                type: 'ADD_DATA',
+                payload: {
+                    datasetInfo: { datasetDescription: '失敗' },
+                },
+            })
+            console.log('error')
+        }
     }
 }
 

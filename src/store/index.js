@@ -6,6 +6,7 @@ import todoReducer from '../reducer/todolist'
 import todoReducer2 from '../reducer/todolist2'
 import weatherReducer from '../reducer/weather'
 import { dataReducer } from '../reducer/weather2'
+import { weatherReducer3 } from '../reducer/weather3'
 
 // redux enhancer
 import { applyMiddleware } from 'redux-subspace'
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     todoReducer2,
     weatherReducer,
     dataReducer,
+    weatherReducer3,
 })
 
 const store = createStore(rootReducer, compose(applyMiddleware(thunk), dynostore(dynamicReducers())))
