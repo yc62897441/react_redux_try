@@ -20,7 +20,7 @@ function HomePage() {
 
     // dispatch 傳到的內容是每個 reducer(/reducer/todolist.js、/reducer/todolist2.js) 都會接收到的，所以這兩個 reducer 的 switch (action.type) 的 case 是相同的，則都會執行兩個 case 的內容
     const dispatch = useDispatch()
-
+    // console.log('dispatch', dispatch) // ƒ dispatch(action) { if (!isPlainObject(action)) { th...
     const state = useSelector((state) => state)
     const todoList = [...state.todoReducer.todoList]
     const todoList2 = [...state.todoReducer2.todoList]
