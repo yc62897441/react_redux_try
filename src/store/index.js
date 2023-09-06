@@ -21,7 +21,35 @@ const rootReducer = combineReducers({
     weatherReducer3,
 })
 
-const store = createStore(rootReducer, compose(applyMiddleware(thunk), dynostore(dynamicReducers())))
+// 可以自定義 middleware，並修改 action 攜帶的內容
+const middleware1 = (store) => (next) => (action) => {
+    console.log('middleware1 received:', action)
+    // 可以去修改 action 攜帶的內容
+    const value = next({
+        type: action.type,
+        payload: {
+            todo: action.payload.todo + ' middleware1 add',
+        },
+    })
+    console.log('middlware1 next return:', value)
+    return 'returned by middleware1'
+}
+const middleware2 = (store) => (next) => (action) => {
+    console.log('middleware2 received:', action)
+    const value = next({
+        type: action.type,
+        payload: {
+            todo: action.payload.todo + ' middleware2 add',
+        },
+    })
+    console.log('middlware2 next return:', value)
+    return 'returned by middleware2'
+}
+const store = createStore(
+    rootReducer,
+    compose(applyMiddleware(middleware1, middleware2, thunk), dynostore(dynamicReducers()))
+)
+// const store = createStore(rootReducer, compose(applyMiddleware(thunk), dynostore(dynamicReducers())))
 // 如果沒有加上 thunk，則無法在 dispatch() 中傳入非同步函式。會出現以下錯誤訊息：
 // redux.js:275 Uncaught Error: Actions must be plain objects. Instead, the actual type was: 'function'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.
 // const store = createStore(rootReducer)
